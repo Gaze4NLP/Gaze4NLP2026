@@ -1,2 +1,3 @@
-# Gaze4NLP2025
-The First International Workshop on Gaze Data and Natural Language Processin (Gaze4NLP 2025)
+# Gaze4NLP2026
+The Second International Workshop on Eye-Tracking Resources and Evaluation for Human-Aligned NLP
+Colocated with LREC 2026
