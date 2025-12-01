@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Committees - Gaze4NLP2026 Workshop</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+        }
+        
+       .banner {
+            background-image: url('images/palma.jpg');
+            background-size: cover;
+            background-position: center;
+            height: auto;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            padding: 2rem 1rem;
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 1rem;
+        }
+        
+        .banner h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .banner p, .banner h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        nav ul li {
+            margin-left: 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a.active {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        
+        .section {
+            padding: 2rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+        }
+        
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .speaker-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .speaker-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .speaker-image {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .speaker-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .speaker-info {
+            padding: 1.2rem;
+        }
+        
+        .speaker-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .speaker-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .speaker-affiliation {
+            color: #777;
+            font-style: italic;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+       
+
+         .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .cfp-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .cfp-box h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .cfp-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .cfp-box ul li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .cfp-box ul li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-col ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #455565;
+            margin-top: 1.5rem;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin: 0.3rem;
+            }
+            
+            .banner {
+                height: 300px;
+            }
+            
+            .banner-content h2 {
+                font-size: 1.3rem;
+            }
+            
+            .banner-content h3 {
+                font-size: 1rem;
+            }
+            
+            .speaker-image {
+                height: 250px;
+            }
+            
+            .tabs {
+                justify-content: flex-start;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .banner {
+                height: 250px;
+            }
+            
+            .banner-content h2 {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .speaker-image {
+                height: 200px;
+            }
+            
+            .speaker-name {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo"><span>Gaze</span>4<span>NLP</span>2026</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="call-for-papers.html">Call for Papers</a></li>
+                    <li><a href="committees.html" class="active">Committees</a></li>
+                   
+                    <li><a href="#">Schedule</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-content">
+           <h2><span class="highlight">Gaze</span>4<span class="highlight">NLP</span>: The Second International Workshop on Eye-Tracking Resources and Evaluation for Human-Aligned NLP</h2>
+           <p>Exploring the Intersection of Eye Tracking and Natural Language Processing</p>
+           <h3>LREC Workshop • Palma, Spain • May 11-16 | 2026</h3>
+           <div>
+               <a href="call-for-papers.html" class="btn">Submit Paper</a>
+           </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Workshop Committees</h2>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active">Organising Committee</button>
+                <button class="tab-btn" onclick="scrollToSection()">Programme Committee</button>
+            </div>
+            
+            <div class="speakers-grid">
+                <div class="speaker-card">
+                    <div class="speaker-image" style="background-image: url('images/cengiz.jpeg');">
+                        <div class="speaker-type">Organising</div>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Dr. Cengiz Acartürk</h3>
+                        <p class="speaker-title">Associate Professor</p>
+                        <p class="speaker-affiliation">Jagiellonian University, Poland</p>
+                    </div>
+                </div>
+                
+                <div class="speaker-card">
+                    <div class="speaker-image" style="background-image: url('images/jamal.jpg');">
+                        <div class="speaker-type">Organising</div>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Dr. Jamal Nasir</h3>
+                        <p class="speaker-title">Assistant Professor</p>
+                        <p class="speaker-affiliation">University of Galway, Ireland</p>
+                    </div>
+                </div>
+
+                <div class="speaker-card">
+                    <div class="speaker-image" style="background-image: url('images/burcu.jpeg');">
+                        <div class="speaker-type">Organising</div>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Dr. Burcu Can</h3>
+                        <p class="speaker-title">Lecturer of Computer Science</p>
+                        <p class="speaker-affiliation">University of Stirling, Scotland, UK</p>
+                    </div>
+                </div>
+                
+                <div class="speaker-card">
+                    <div class="speaker-image" style="background-image: url('/api/placeholder/350/250');">
+                        <div class="speaker-type">Organising</div>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Dr. Çağrı Çöltekin</h3>
+                        <p class="speaker-title">Lecturer of Computational Linguistics</p>
+                        <p class="speaker-affiliation">University of Tübingen, Germany</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="targetSection" class="section">
+        <div class="container">
+            <div class="cfp-box">
+                <h2>Programme Committee (TBA)</h2>
+                <ul>
+                    <li>Özge Alaçam, University of Bielefeld, Germany</li>
+                    <li>Le An Ha, Ho Chi Minh City University of Foreign Languages and Information Technology, Vietnam</li>
+                    <li>Fariz Ikhwantri, Simula Research Laboratory, Norway</li>
+                    <li>Oksana Ivchenko, University of Lille</li>
+                    <li>Pawel Kasprowski, Silesian University of Technology, Poland</li>
+                    <li>Victor Kuperman, McMaster University, Canada</li>
+                    <li>Joseph Lemley, University of Galway</li>
+                    <li>David Reich, University of Potsdam, Germany</li>
+                    <li>Noam Siegelman, Hebrew University of Jerusalem, Haskins Laboratories, Israel</li>
+                    <li>Ana Matić Škorić, University of Zagreb, Croatia</li>
+                    <li>Evis Trandafili, University of New York Tirana, Albania</li>
+                    <li>Iraklis Varlamis, Harokopio University of Athens, Greece</li>
+                    <li>Mila Vulchanova, Norwegian University of Science & Technology</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Gaze4NLP 2026</h3>
+                <p>The premier workshop on integrating eye-tracking data with natural language processing.</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="call-for-papers.html">Call for Papers</a></li>
+                    <li><a href="committees.html" class="active">Committees</a></li>
+                    
+                    <li><a href="schedule.html">Schedule</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: gaze4nlp@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gaze4NLP Workshop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript function for smooth scrolling
+        function scrollToSection() {
+            const targetSection = document.getElementById('targetSection');
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Set the first tab as active by default
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tab-btn').classList.add('active');
+        });
+    </script>
+</body>
+</html>

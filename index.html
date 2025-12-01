@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaze4NLP2026 Workshop</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            font-size: 16px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        .image-container {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+    
+        .overlay-text {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .header-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a.active {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .banner {
+            background-image: url('images/palma.jpg');
+            background-size: cover;
+            background-position: center;
+            height: auto;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            padding: 2rem 1rem;
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 1rem;
+        }
+        
+        .banner h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .banner p, .banner h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .section {
+            padding: 2rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title p {
+            color: #777;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+        }
+        
+        .grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            height: 150px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 1rem;
+        }
+        
+        .card-content h3 {
+            margin-bottom: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .card-content p {
+            color: #777;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .info-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .info-box h3 {
+            margin-bottom: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .date-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.8rem;
+        }
+        
+        .date {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.4rem;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+        }
+        
+        .footer-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .footer-col {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-col ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #455565;
+            margin-top: 1rem;
+            color: #bbb;
+            font-size: 0.8rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Larger screens */
+        @media (min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                max-width: 1200px;
+            }
+            
+            .logo {
+                margin-bottom: 0;
+                font-size: 1.8rem;
+            }
+            
+            nav ul li {
+                margin-left: 1rem;
+            }
+            
+            .banner {
+                height: 400px;
+            }
+            
+            .banner h2 {
+                font-size: 2.5rem;
+            }
+            
+            .banner p, .banner h3 {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                max-width: 1200px;
+                padding: 2rem;
+            }
+            
+            .grid {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .info-box, .card {
+                flex: 1 1 calc(50% - 1rem);
+            }
+            
+            .footer-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                max-width: 1200px;
+            }
+            
+            .footer-col {
+                flex: 1 1 calc(33.333% - 1.5rem);
+            }
+            
+            .date-item {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .date {
+                margin-bottom: 0;
+                margin-right: 1rem;
+                min-width: 100px;
+            }
+        }
+
+        /* Extra large screens */
+        @media (min-width: 1024px) {
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            
+            .info-box, .card {
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo"><span>Gaze</span>4<span>NLP</span>2026</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="call-for-papers.html">Call for Papers</a></li>
+                    <li><a href="committees.html">Committees</a></li>
+                    <li><a href="schedule.html">Schedule</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-content">
+            <h2><span class="highlight">Gaze</span>4<span class="highlight">NLP</span>: The Second International Workshop on Eye-Tracking Resources and Evaluation for Human-Aligned NLP</h2>
+            <p>Exploring the Intersection of Eye Tracking and Natural Language Processing</p>
+            <h3>LREC Workshop • Palma, Spain • May 11-16 | 2026</h3>
+           
+ 
+            <div>
+                <a href="call-for-papers.html" class="btn">Submit Paper</a>
+            </div>
+
+        
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Welcome to Gaze4NLP 2026</h2>
+                <p>Join us for the premier workshop on integrating eye-tracking data with natural language processing models and applications.</p>
+            </div>
+
+<!--
+
+ <div class="grid">
+                <div class="info-box">
+                    <h3>Accepted Papers <a href="schedule.html">See Full Schedule here</a></h3>
+                    <div class="date-item">
+                        <div class="date">1 </div>
+                        <div><b>What determines where readers fixate next? Leveraging NLP to investigate human cognition</b>
+                            <br><i>
+Adrielli Tina Lopes Rego, Joshua Snell and Martijn Meeter</i></div>
+                    </div>
+                     
+                     <div class="date-item">
+                        <div class="date">2 </div>
+                        <div><b>
+                        Benchmarking Language Model Surprisal for Eye-Tracking Predictions in Brazilian Portuguese    
+
+                        </b>
+                            <br><i>
+ Diego Alves
+ </i></div>
+                    </div>
+
+
+                      <div class="date-item">
+                        <div class="date">3</div>
+                        <div><b>
+                            EgoDrive: Egocentric Multimodal Driver Behavior Recognition using Project Aria
+                            
+                        </b>
+                            <br><i>
+Michael Rice, Lorenz Krause and Waqar Shahid Qureshi </i></div>
+                    </div>
+
+
+                      <div class="date-item">
+                        <div class="date">4 </div>
+                        <div><b>
+                            Comparing Eye-gaze and Transformer Attention Mechanisms in Reading Tasks
+                            
+                        </b>
+                            <br><i>
+                                Maria Mouratidi and Massimo Poesio 
+ 
+ </i></div>
+                    </div>
+
+
+                      <div class="date-item">
+                        <div class="date">5 </div>
+                        <div><b>
+                            
+                            A French Eye-Tracking Corpus of Original and Simplified Medical, Clinical, and General Texts - FETA
+                        </b>
+                            <br><i>
+ Oksana Ivchenko and Natalia Grabar 
+ </i></div>
+                    </div>
+
+
+                      <div class="date-item">
+                        <div class="date">6 </div>
+                        <div><b>
+                            Exploring Mouse Tracking for Reading on Romanian Data
+                            
+                        </b>
+                            <br><i>
+ Cristina Maria Popescu and Sergiu Nisioi 
+ </i></div>
+                    </div>
+
+
+                      <div class="date-item">
+                        <div class="date">7 </div>
+                        <div><b>
+                            Where Patients Slow Down: Surprisal, Uncertainty, and Simplification in French Clinical Reading
+                            
+                        </b>
+                            <br><i>
+                                Oksana Ivchenko, Alamgir Munir Qazi and Jamal Abdul Nasir 
+ 
+ </i></div>
+                    </div>
+
+ <div class="date-item">
+                        <div class="date">8 </div>
+                        <div><b>
+                            
+                            AlEYEgnment: Leveraging Eye‑Tracking‑while‑Reading to Align Language Models with Human Preferences
+                        </b>
+                            <br><i>
+                                Anna Bondar, David Robert Reich and Lena Ann Jäger
+ 
+ </i></div>
+                    </div>
+                    
+                      <div class="date-item">
+                        <div class="date">9 </div>
+                        <div><b>
+                            Predicting Total Reading Time Using Romanian Eye-Tracking Data
+                            
+                        </b>
+                            <br><i>
+                                Anamaria Hodivoianu, Oleksandra Kuvshynova, Filip Popovici, Adrian Luca and Sergiu Nisioi 
+ 
+ </i></div>
+                    </div>
+
+                     
+
+
+
+                </div>
+            </div>
+-->
+            <div class="grid">
+                <div class="info-box">
+                    <h3>Important Dates</h3>
+                    <div class="date-item">
+                        <div class="date">9 February, 2026</div>
+                        <div>Paper Submission Deadline</div>
+                    </div>
+                    <div class="date-item">
+                        <div class="date">16 March, 2026</div>
+                        <div>Notification of Acceptance</div>
+                    </div>
+                    <div class="date-item">
+                        <div class="date">30 March, 2026</div>
+                        <div>Camera-ready Papers Due</div>
+                    </div>
+                    <div class="date-item">
+                        <div class="date">May, 2026</div>
+                        <div>Workshop Date</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Workshop Focus</h3>
+                    <p>The Gaze4NLP 2026 workshop aims to bring together researchers and practitioners working at the intersection of eye tracking and natural language processing. By integrating eye movement data with NLP models, we can enhance our understanding of human language processing and improve NLP applications.</p>
+                    <p>Join us for keynote talks, exciting presentations, and networking opportunities.</p>
+                    <a href="about.html" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Funded By & Partners</h2>
+            </div>
+
+            <div class="grid">
+                <div class="info-box">
+                    <h3>Funded by MultiplEYE COST Action</h3>
+                    <div class="image-box">
+                        <div class="image-container">
+                            <a href="https://multipleye.eu" target="_blank"><img src="images/multipleye.png" alt="MultiplEYE COST Action logo"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Partners</h3>
+                     
+                    <p>We support the LINGUIST List</p>
+                    <div class="image-box">
+                        <div class="image-container">
+                            <a href="https://linguistlist.org" target="_blank"><img src="images/LinguistList2.png" alt="Linguist List logo"></a>
+                        </div>
+                    </div>
+
+
+ <p>School of Computer Science, University of Galway</p>
+                    <div class="image-box">
+                        <div class="image-container">
+                            <a href="https://universityofgalway.ie" target="_blank"><img src="images/nuig.png" alt="University of Galway logo"></a>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Gaze4NLP 2026</h3>
+                <p>The premier workshop on integrating eye-tracking data with natural language processing.</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="call-for-papers.html">Call for Papers</a></li>
+                    <li><a href="committees.html">Committees</a></li>
+                    
+                    <li><a href="schedule.html">Schedule</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: gaze4nlp@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gaze4NLP Workshop. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
