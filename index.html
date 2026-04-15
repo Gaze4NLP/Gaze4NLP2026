@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Gaze4NLP2026 Workshop</title>
     <style>
         :root {
@@ -20,11 +21,14 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.5;
             color: #333;
             background-color: #f9f9f9;
-            font-size: 16px;
+            font-size: 100%;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
         
         header {
@@ -46,6 +50,7 @@
             align-items: center;
             overflow: hidden;
             background: #f5f5f5;
+            min-height: 100px;
         }
 
         .image-container img {
@@ -53,6 +58,7 @@
             height: auto;
             object-fit: contain;
             border-radius: 4px;
+            display: block;
         }
     
         .overlay-text {
@@ -67,10 +73,11 @@
         .header-container {
             width: 100%;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 0 1rem;
             display: flex;
             flex-direction: column;
             align-items: center;
+            max-width: 1200px;
         }
         
         .logo {
@@ -91,10 +98,11 @@
             flex-wrap: wrap;
             justify-content: center;
             list-style: none;
+            gap: 0.5rem;
         }
         
         nav ul li {
-            margin: 0.5rem;
+            margin: 0;
         }
         
         nav ul li a {
@@ -103,7 +111,9 @@
             font-weight: 500;
             transition: color 0.3s;
             position: relative;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            padding: 0.5rem 0.75rem;
+            display: inline-block;
         }
         
         nav ul li a:hover {
@@ -117,9 +127,9 @@
         nav ul li a.active::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
+            bottom: 0;
+            left: 0.75rem;
+            right: 0.75rem;
             height: 2px;
             background-color: var(--accent-color);
         }
@@ -128,7 +138,7 @@
             background-image: url('images/palma.jpg');
             background-size: cover;
             background-position: center;
-            height: auto;
+            background-repeat: no-repeat;
             min-height: 300px;
             display: flex;
             align-items: center;
@@ -136,7 +146,7 @@
             text-align: center;
             color: white;
             position: relative;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
         }
         
         .banner::before {
@@ -146,24 +156,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.55);
         }
         
         .banner-content {
             position: relative;
             z-index: 1;
             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 1rem;
         }
         
         .banner h2 {
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 5vw, 2.5rem);
             margin-bottom: 1rem;
             color: white;
+            line-height: 1.3;
         }
         
         .banner p, .banner h3 {
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             margin-bottom: 1rem;
         }
         
@@ -171,13 +184,16 @@
             display: inline-block;
             background-color: var(--accent-color);
             color: white;
-            padding: 0.6rem 1.2rem;
+            padding: 0.7rem 1.4rem;
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
             transition: background-color 0.3s;
             margin: 0.3rem;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            text-align: center;
         }
         
         .btn:hover {
@@ -195,30 +211,32 @@
         
         .container {
             width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 0 1.5rem;
         }
         
         .section {
-            padding: 2rem 0;
+            padding: 3rem 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         
         .section-title h2 {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
             color: var(--secondary-color);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
         
         .section-title p {
-            color: #777;
-            width: 100%;
+            color: #666;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 1rem;
+            font-size: 1rem;
         }
         
         .highlight {
@@ -226,9 +244,10 @@
         }
         
         .grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
         }
         
         .card {
@@ -237,7 +256,6 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
-            margin-bottom: 1rem;
         }
         
         .card:hover {
@@ -253,74 +271,86 @@
         }
         
         .card-content {
-            padding: 1rem;
+            padding: 1.25rem;
         }
         
         .card-content h3 {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.75rem;
             color: var(--secondary-color);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
         }
         
         .card-content p {
-            color: #777;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
         }
         
         .info-box {
             background-color: white;
             border-radius: 10px;
-            padding: 1rem;
+            padding: 1.25rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
+            height: 100%;
         }
         
         .info-box h3 {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             color: var(--secondary-color);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
         }
         
         .date-item {
             display: flex;
             flex-direction: column;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
         }
         
         .date {
             background-color: var(--primary-color);
             color: white;
-            padding: 0.4rem;
+            padding: 0.3rem 0.75rem;
             border-radius: 5px;
             margin-bottom: 0.5rem;
             text-align: center;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            display: inline-block;
+            width: auto;
+            min-width: 100px;
+        }
+        
+        .image-box {
+            margin: 1rem 0;
         }
         
         footer {
             background-color: var(--secondary-color);
             color: white;
-            padding: 2rem 0;
+            padding: 2rem 0 1rem;
         }
         
         .footer-container {
-            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
         
         .footer-col {
-            margin-bottom: 1rem;
+            flex: 1;
         }
         
         .footer-col h3 {
             font-size: 1.2rem;
             margin-bottom: 1rem;
+            color: white;
         }
         
         .footer-col ul {
@@ -343,12 +373,12 @@
         }
         
         .footer-bottom {
-            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 1rem 1.5rem 0;
             text-align: center;
             border-top: 1px solid #455565;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             color: #bbb;
             font-size: 0.8rem;
         }
@@ -360,99 +390,87 @@
         }
         
         .social-icons a {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 35px;
             height: 35px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
             text-decoration: none;
             transition: background-color 0.3s;
-            font-size: 0.9rem;
         }
         
         .social-icons a:hover {
             background-color: var(--accent-color);
         }
 
-        /* Larger screens */
+        /* Tablet and up */
         @media (min-width: 768px) {
             .header-container {
                 flex-direction: row;
                 justify-content: space-between;
-                max-width: 1200px;
             }
             
             .logo {
                 margin-bottom: 0;
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             
-            nav ul li {
-                margin-left: 1rem;
+            nav ul li a {
+                font-size: 1rem;
             }
             
             .banner {
-                height: 400px;
-            }
-            
-            .banner h2 {
-                font-size: 2.5rem;
-            }
-            
-            .banner p, .banner h3 {
-                font-size: 1.2rem;
-            }
-            
-            .container {
-                max-width: 1200px;
-                padding: 2rem;
+                min-height: 400px;
             }
             
             .grid {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            
-            .info-box, .card {
-                flex: 1 1 calc(50% - 1rem);
-            }
-            
-            .footer-container {
-                flex-direction: row;
-                flex-wrap: wrap;
-                max-width: 1200px;
-            }
-            
-            .footer-col {
-                flex: 1 1 calc(33.333% - 1.5rem);
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .date-item {
                 flex-direction: row;
                 align-items: center;
+                gap: 1rem;
             }
             
             .date {
                 margin-bottom: 0;
-                margin-right: 1rem;
-                min-width: 100px;
+                margin-right: 0;
+                min-width: 120px;
+            }
+            
+            .footer-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .footer-col {
+                flex: 1 1 calc(33.333% - 1.5rem);
             }
         }
 
-        /* Extra large screens */
+        /* Desktop */
         @media (min-width: 1024px) {
             .grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .info-box, .card {
-                flex: none;
+        }
+
+        /* Image fallback */
+        .image-container img {
+            background-color: #f0f0f0;
+        }
+        
+        /* Print styles */
+        @media print {
+            .banner::before {
+                background: none;
+            }
+            .btn {
+                display: none;
             }
         }
     </style>
@@ -478,13 +496,6 @@
             <h2><span class="highlight">Gaze</span>4<span class="highlight">NLP</span>: The Second International Workshop on Eye-Tracking Resources and Evaluation for Human-Aligned NLP</h2>
             <p>Exploring the Intersection of Eye Tracking and Natural Language Processing</p>
             <h3>LREC Workshop • Palma, Spain • May 12 | 2026</h3>
-           
- <!--
-            <div>
-                <a href="call-for-papers.html" class="btn">Submit Paper (Deadline:  23 Feb 2026)</a>
-            </div>
-
-        -->
         </div>
     </section>
 
@@ -495,169 +506,59 @@
                 <p>Join us for the premier workshop on integrating eye-tracking data with natural language processing models and applications.</p>
             </div>
 
- 
-
- <div class="grid">
+            <div class="grid">
                 <div class="info-box">
-                    <h3>Accepted Papers <a href="schedule.html">See Full Schedule here</a></h3>
+                    <h3>Accepted Papers <a href="schedule.html">→ See Full Schedule</a></h3>
                     
-
-
                     <div class="date-item">
-                        <div class="date">1 </div>
-                        <div><b>
-                            Eye tracking for Machine Translation Quality Evaluatio
-
-                        </b>
-                            <br><i>
-                        
-Natalia Glazyrina and Ondřej Bojar
-                       </i></div>
+                        <div class="date">1</div>
+                        <div><b>Eye tracking for Machine Translation Quality Evaluation</b><br><i>Natalia Glazyrina and Ondřej Bojar</i></div>
                     </div>
-
-
-
 
                     <div class="date-item">
                         <div class="date">2</div>
-                        <div><b>
-                          Cross-Linguistic Analysis of Eye Movement Patterns: Insights from the
-First Arabic Eye-Tracking Corpus for NLP  
-
-                        </b>
-                            <br><i>
-                        Ibtehal Baazeem, Hend Al-Khalifa and Abdulmalik AlSalman
-
-                       </i></div>
+                        <div><b>Cross-Linguistic Analysis of Eye Movement Patterns: Insights from the First Arabic Eye-Tracking Corpus for NLP</b><br><i>Ibtehal Baazeem, Hend Al-Khalifa and Abdulmalik AlSalman</i></div>
                     </div>
-
-
 
                     <div class="date-item">
                         <div class="date">3</div>
-                        <div><b>
-                            
-Exploring Cognitively Informed Sentence Simplification with Gaze-
-Guided Text Generation
-                        </b>
-                            <br><i>
-                        
-Andreas Säuberli, Diego Frassinelli and Barbara Plank
-                       </i></div>
+                        <div><b>Exploring Cognitively Informed Sentence Simplification with Gaze-Guided Text Generation</b><br><i>Andreas Säuberli, Diego Frassinelli and Barbara Plank</i></div>
                     </div>
-
 
                     <div class="date-item">
                         <div class="date">4</div>
-                        <div><b>
-                            Impact of Text Simplification on Eye-Tracking-Based Reading Profiles
-Across Domains
-
-                        </b>
-                            <br><i>
-                        
-ksana Ivchenko and Natalia Grabar
-                       </i></div>
+                        <div><b>Impact of Text Simplification on Eye-Tracking-Based Reading Profiles Across Domains</b><br><i>Oksana Ivchenko and Natalia Grabar</i></div>
                     </div>
-
 
                     <div class="date-item">
                         <div class="date">5</div>
-                        <div><b>
-                        Parts of Speech Shape Reading - Time Variability in Brazilian Portuguese    
-
-                        </b>
-                            <br><i>
-                        
-Diego Alves
-                       </i></div>
+                        <div><b>Parts of Speech Shape Reading - Time Variability in Brazilian Portuguese</b><br><i>Diego Alves</i></div>
                     </div>
-
 
                     <div class="date-item">
                         <div class="date">6</div>
-                        <div><b>
-                            CoordiMap: Conceptual Proposition of a new Framework for the An-
-notation of Verbal Elicitation Paths on Visual Experiment Stimuli and
-Introduction of the Associated Annotation Tool
-
-                        </b>
-                            <br><i>
-                        Carmen Schacht
-
-                       </i></div>
+                        <div><b>CoordiMap: Conceptual Proposition of a new Framework for the Annotation of Verbal Elicitation Paths on Visual Experiment Stimuli and Introduction of the Associated Annotation Tool</b><br><i>Carmen Schacht</i></div>
                     </div>
-
 
                     <div class="date-item">
                         <div class="date">7</div>
-                        <div><b>
-                            
-A Comparative Study Between Mouse and Eye Tracking Signals for
-Long Romanian Texts
-                        </b>
-                            <br><i>
-                        
-Bogdan Alexandru Gheorghe and Sergiu Nisioi
-                       </i></div>
+                        <div><b>A Comparative Study Between Mouse and Eye Tracking Signals for Long Romanian Texts</b><br><i>Bogdan Alexandru Gheorghe and Sergiu Nisioi</i></div>
                     </div>
-
 
                     <div class="date-item">
                         <div class="date">8</div>
-                        <div><b>
-                            Eye-Contact and Facial Expression Tracking for Assertiveness Training
-in VR-Based Anti-Bullying Education
-
-                        </b>
-                            <br><i>
-                        
-Lubomir Ivanov, Anabel Nolasco and Mary Vrahimis
-                       </i></div>
+                        <div><b>Eye-Contact and Facial Expression Tracking for Assertiveness Training in VR-Based Anti-Bullying Education</b><br><i>Lubomir Ivanov, Anabel Nolasco and Mary Vrahimis</i></div>
                     </div>
-
 
                     <div class="date-item">
                         <div class="date">9</div>
-                        <div><b>
-                            
-Predicting Gaze Location without Camera or Eye-Tracker
-                        </b>
-                            <br><i>
-                        Saman Rezapoor, Sajad Shirali-Shahreza and Gerald Penn
-
-                       </i></div>
+                        <div><b>Predicting Gaze Location without Camera or Eye-Tracker</b><br><i>Saman Rezapoor, Sajad Shirali-Shahreza and Gerald Penn</i></div>
                     </div>
-
 
                     <div class="date-item">
                         <div class="date">10</div>
-                        <div><b>
-                            A Survey of Incorporating Gaze Datai nto Natural Language Processing
-Models and Applications
-
-                        </b>
-                            <br><i>
-                        Cengiz Acarturk, Burcu Can, Melike Caglayan, Jamal Abdul Nasir and
-Cagri Coltekin
-
-                       </i></div>
+                        <div><b>A Survey of Incorporating Gaze Data into Natural Language Processing Models and Applications</b><br><i>Cengiz Acarturk, Burcu Can, Melike Caglayan, Jamal Abdul Nasir and Cagri Coltekin</i></div>
                     </div>
-
-
-
-
-
-
-
-
-
-                    </div>
-
-                     
-
-
-
                 </div>
             </div>
  
@@ -701,33 +602,22 @@ Cagri Coltekin
             <div class="grid">
                 <div class="info-box">
                     <h3>Funded by MultiplEYE COST Action</h3>
-                    <div class="image-box">
-                        <div class="image-container">
-                            <a href="https://multipleye.eu" target="_blank"><img src="images/multipleye.png" alt="MultiplEYE COST Action logo"></a>
-                        </div>
+                    <div class="image-container">
+                        <a href="https://multipleye.eu" target="_blank"><img src="images/multipleye.png" alt="MultiplEYE COST Action logo" loading="lazy"></a>
                     </div>
                 </div>
 
                 <div class="info-box">
                     <h3>Partners</h3>
-                     
                     <p>We support the LINGUIST List</p>
-                    <div class="image-box">
-                        <div class="image-container">
-                            <a href="https://linguistlist.org" target="_blank"><img src="images/LinguistList2.png" alt="Linguist List logo"></a>
-                        </div>
+                    <div class="image-container">
+                        <a href="https://linguistlist.org" target="_blank"><img src="images/LinguistList2.png" alt="Linguist List logo" loading="lazy"></a>
                     </div>
 
-
- <p>School of Computer Science, University of Galway</p>
-                    <div class="image-box">
-                        <div class="image-container">
-                            <a href="https://universityofgalway.ie" target="_blank"><img src="images/nuig.png" alt="University of Galway logo"></a>
-                        </div>
+                    <p>School of Computer Science, University of Galway</p>
+                    <div class="image-container">
+                        <a href="https://universityofgalway.ie" target="_blank"><img src="images/nuig.png" alt="University of Galway logo" loading="lazy"></a>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -747,7 +637,6 @@ Cagri Coltekin
                     <li><a href="about.html">About</a></li>
                     <li><a href="call-for-papers.html">Call for Papers</a></li>
                     <li><a href="committees.html">Committees</a></li>
-                    
                     <li><a href="schedule.html">Schedule</a></li>
                 </ul>
             </div>
