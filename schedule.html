@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - Gaze4NLP2026 Workshop</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+        }
+       .banner {
+            background-image: url('images/palma.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            padding: 2rem 1rem;
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 1rem;
+        }
+        
+        .banner h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .banner p, .banner h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a.active {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .page-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 0.5rem;
+            border-radius: 5px;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .schedule-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .schedule-day {
+            margin-bottom: 3rem;
+        }
+        
+        .day-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .day-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .session {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .session-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .session-header h4 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .session-time {
+            font-weight: bold;
+        }
+        
+        .session-content {
+            padding: 1.5rem;
+        }
+        
+        .paper {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .paper:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .paper-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .paper-authors {
+            font-style: italic;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+        
+        .keynote {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        
+        .keynote-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .keynote-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .keynote-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .keynote-info .speaker {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .keynote-info .affiliation {
+            font-style: italic;
+            color: #777;
+            margin-bottom: 1rem;
+        }
+        
+        .break {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .break-type {
+            font-weight: bold;
+        }
+        
+        .special-session {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .special-session h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid #455565;
+            margin-top: 2rem;
+            color: #bbb;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            
+            .keynote {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .session-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   <header>
+        <div class="header-container">
+            <a href="index.html" class="logo"><span>Gaze</span>4<span>NLP</span>2026</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" >About</a></li>
+                    <li><a href="call-for-papers.html" >Call for Papers</a></li>
+                    <li><a href="committees.html">Committees</a></li>
+                    <li><a href="schedule.html" class="active">Schedule</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-content">
+            <h2><span class="highlight">Gaze</span>4<span class="highlight">NLP</span>: The Second International Workshop on Eye-Tracking Resources and Evaluation for Human-Aligned NLP</h2>
+            <p>Exploring the Intersection of Eye Tracking and Natural Language Processing</p>
+            <h3>LREC Workshop • Palma, Spain • May 12 | 2026</h3>
+
+        
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Program Overview  </h2>
+                <p>May 12, 2026  </p>
+            </div>
+            
+            
+            
+            <div class="schedule-container">
+                <!-- Day 1 Schedule -->
+                <div class="schedule-day">
+                    <div class="day-header">
+                        <h3>Tuesday, May 12, 2026</h3>
+                        <span>Venue: Room 11, Palau de Congressos de Palma</span>
+                    </div>
+                    
+                    <div class="session">
+                        <div class="session-header">
+                            <h4>Opening Remarks</h4>
+                            <span class="session-time">09:00 - 09:15</span>
+                        </div>
+                        <div class="session-content">
+                            <p>Welcome to the Gaze4NLP 2026 Workshop by the organizing committee.</p>
+                        </div>
+
+
+
+                 
+
+                    
+                    <div class="session">
+                        <div class="session-header">
+                            <h4>Session 1: Eye-Tracking Data in Reading and Language Processing</h4>
+                            <span class="session-time">09:15 - 10:35</span>
+                        </div>
+                        <div class="session-content">
+                            <div class="paper">
+                                <div class="paper-title">Eye tracking for Machine Translation Quality Evaluation</div>
+                                <div class="paper-authors">Natalia Glazyrina and Ondřej Bojar</div>
+                                
+                            </div>
+                            
+                            <div class="paper">
+                                <div class="paper-title"> Cross-Linguistic Analysis of Eye Movement Patterns: Insights from the
+First Arabic Eye-Tracking Corpus for NLP</div>
+                                <div class="paper-authors">Ibtehal Baazeem, Hend Al-Khalifa and Abdulmalik AlSalman</div>
+                                 
+                            </div>
+
+                            <div class="paper">
+                                <div class="paper-title">Exploring Cognitively Informed Sentence Simplification with Gaze-
+Guided Text Generation </div>
+                                <div class="paper-authors">Andreas Säuberli, Diego Frassinelli and Barbara Plank</div>
+                                 
+                            </div>
+
+
+                            <div class="paper">
+                                <div class="paper-title"> Impact of Text Simplification on Eye-Tracking-Based Reading Profiles
+Across Domains</div>
+                                <div class="paper-authors">Oksana Ivchenko and Natalia Grabar</div>
+                                 
+                            </div>
+                            
+                            
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="break">
+                        <span class="break-type">Coffee Break</span>
+                        <span>10:30 - 11:00</span>
+                    </div>
+                    
+                    <div class="session">
+                        <div class="session-header">
+                            <h4>Session 2: Eye-Tracking Data in Multimodal Context</h4>
+                            <span class="session-time">11:00 - 13:00</span>
+                        </div>
+                        <div class="session-content">
+                            
+
+                            <div class="paper">
+                                <div class="paper-title"> Parts of Speech Shape Reading - Time Variability in Brazilian Portuguese</div>
+                                <div class="paper-authors">Diego Alves</div>
+                                 
+                            </div>
+
+
+                             <div class="paper">
+                                <div class="paper-title"> CoordiMap: Conceptual Proposition of a new Framework for the An-
+notation of Verbal Elicitation Paths on Visual Experiment Stimuli and
+Introduction of the Associated Annotation Tool</div>
+                                <div class="paper-authors">Carmen Schacht</div>
+                                 
+                            </div>
+
+
+                             <div class="paper">
+                                <div class="paper-title"> A Comparative Study Between Mouse and Eye Tracking Signals for
+Long Romanian Texts</div>
+                                <div class="paper-authors">Bogdan Alexandru Gheorghe and Sergiu Nisioi</div>
+                                 
+                            </div>
+
+                             <div class="paper">
+                                <div class="paper-title"> Eye-Contact and Facial Expression Tracking for Assertiveness Training
+in VR-Based Anti-Bullying Education</div>
+                                <div class="paper-authors">Lubomir Ivanov, Anabel Nolasco and Mary Vrahimis</div>
+                                 
+                            </div>
+
+                             <div class="paper">
+                                <div class="paper-title"> Predicting Gaze Location without Camera or Eye-Tracker</div>
+                                <div class="paper-authors">Saman Rezapoor, Sajad Shirali-Shahreza and Gerald Penn</div>
+                                 
+                            </div>
+
+                            <div class="paper">
+                                <div class="paper-title">A Survey of Incorporating Gaze Datai nto Natural Language Processing
+Models and Applications </div>
+                                <div class="paper-authors">Cengiz Acarturk, Burcu Can, Melike Caglayan, Jamal Abdul Nasir and
+Cagri Coltekin</div>
+                                 
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    
+                     
+                    
+                    
+            
+            
+        </div>
+                    </div>
+
+
+
+                    
+                    
+                    
+    </section>
+
+     <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Gaze4NLP 2026</h3>
+                <p>The premier workshop on integrating eye-tracking data with natural language processing.</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="call-for-papers.html">Call for Papers</a></li>
+                    <li><a href="committees.html">Committees</a></li>
+                    
+                    <li><a href="schedule.html">Schedule</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: gaze4nlp@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gaze4NLP Workshop. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
